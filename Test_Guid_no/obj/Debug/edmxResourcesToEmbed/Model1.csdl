@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BankingRulesModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="BankingRulesEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Banks" EntityType="BankingRulesModel.Bank" />
+    <EntitySet Name="Categories" EntityType="BankingRulesModel.Category" />
+    <EntitySet Name="Circulars" EntityType="BankingRulesModel.Circular" />
+    <EntitySet Name="Cities" EntityType="BankingRulesModel.City" />
+    <EntitySet Name="Countries" EntityType="BankingRulesModel.Country" />
+    <EntitySet Name="Customers" EntityType="BankingRulesModel.Customer" />
+    <EntitySet Name="LoginDetails" EntityType="BankingRulesModel.LoginDetail" />
+    <EntitySet Name="RoleMasters" EntityType="BankingRulesModel.RoleMaster" />
+    <EntitySet Name="States" EntityType="BankingRulesModel.State" />
+    <EntitySet Name="sysdiagrams" EntityType="BankingRulesModel.sysdiagram" />
+    <AssociationSet Name="FK_Circular_Category" Association="BankingRulesModel.FK_Circular_Category">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Circular" EntitySet="Circulars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Circular_State" Association="BankingRulesModel.FK_Circular_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="Circular" EntitySet="Circulars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_Country" Association="BankingRulesModel.FK_City_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Country_Country" Association="BankingRulesModel.FK_Country_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Country1" EntitySet="Countries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_City" Association="BankingRulesModel.FK_Customer_City">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State_Country" Association="BankingRulesModel.FK_State_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="State" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_State" Association="BankingRulesModel.FK_Customer_State">
+      <End Role="State" EntitySet="States" />
+      <End Role="Customer" EntitySet="Customers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="BankID" />
+    </Key>
+    <Property Name="BankID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BankName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category1" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="ParentID" Type="Int64" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Circular">
+    <Key>
+      <PropertyRef Name="CircularId" />
+    </Key>
+    <Property Name="CircularId" Type="Int64" Nullable="false" />
+    <Property Name="Category" Type="Int64" />
+    <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="FileName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="VideoLink" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="BankID" Type="Int64" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CountryIDF" Type="Int64" />
+    <Property Name="StateIDF" Type="Int64" />
+    <NavigationProperty Name="Country" Relationship="BankingRulesModel.FK_Circular_Category" FromRole="Circular" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="BankingRulesModel.FK_Circular_State" FromRole="Circular" ToRole="State" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityIDP" />
+    </Key>
+    <Property Name="CityIDP" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="StateIDF" Type="Int64" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CountryIDF" Type="Int64" />
+    <NavigationProperty Name="Country" Relationship="BankingRulesModel.FK_City_Country" FromRole="City" ToRole="Country" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int64" Nullable="false" />
+    <Property Name="CountryName" Type="String" Nullable="false" MaxLength="80" Unicode="false" FixedLength="false" />
+    <Property Name="ShortName" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="Phonecode" Type="Int64" Nullable="false" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Circulars" Relationship="BankingRulesModel.FK_Circular_Category" FromRole="Country" ToRole="Circular" />
+    <NavigationProperty Name="Cities" Relationship="BankingRulesModel.FK_City_Country" FromRole="Country" ToRole="City" />
+    <NavigationProperty Name="Country1" Relationship="BankingRulesModel.FK_Country_Country" FromRole="Country" ToRole="Country1" />
+    <NavigationProperty Name="Country2" Relationship="BankingRulesModel.FK_Country_Country" FromRole="Country1" ToRole="Country" />
+    <NavigationProperty Name="Customers" Relationship="BankingRulesModel.FK_Customer_City" FromRole="Country" ToRole="Customer" />
+    <NavigationProperty Name="States" Relationship="BankingRulesModel.FK_State_Country" FromRole="Country" ToRole="State" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="Int64" />
+    <Property Name="Occupation" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="150" Unicode="true" FixedLength="true" />
+    <Property Name="ContactNo" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+    <Property Name="MobileNo" Type="String" MaxLength="15" Unicode="true" FixedLength="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="150" Unicode="true" FixedLength="true" />
+    <Property Name="FaxNo" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
+    <Property Name="StartDate" Type="DateTime" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CountryIDF" Type="Int64" />
+    <Property Name="StateIDF" Type="Int64" />
+    <NavigationProperty Name="Country" Relationship="BankingRulesModel.FK_Customer_City" FromRole="Customer" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="BankingRulesModel.FK_Customer_State" FromRole="Customer" ToRole="State" />
+  </EntityType>
+  <EntityType Name="LoginDetail">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Role" Type="Int64" />
+  </EntityType>
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateIDP" />
+    </Key>
+    <Property Name="StateIDP" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CountryIDF" Type="Int64" />
+    <Property Name="Is_Active" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="Circulars" Relationship="BankingRulesModel.FK_Circular_State" FromRole="State" ToRole="Circular" />
+    <NavigationProperty Name="Country" Relationship="BankingRulesModel.FK_State_Country" FromRole="State" ToRole="Country" />
+    <NavigationProperty Name="Customers" Relationship="BankingRulesModel.FK_Customer_State" FromRole="State" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Circular_Category">
+    <End Role="Country" Type="BankingRulesModel.Country" Multiplicity="0..1" />
+    <End Role="Circular" Type="BankingRulesModel.Circular" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Circular">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Circular_State">
+    <End Role="State" Type="BankingRulesModel.State" Multiplicity="0..1" />
+    <End Role="Circular" Type="BankingRulesModel.Circular" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateIDP" />
+      </Principal>
+      <Dependent Role="Circular">
+        <PropertyRef Name="StateIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_Country">
+    <End Role="Country" Type="BankingRulesModel.Country" Multiplicity="0..1" />
+    <End Role="City" Type="BankingRulesModel.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Country_Country">
+    <End Role="Country" Type="BankingRulesModel.Country" Multiplicity="1" />
+    <End Role="Country1" Type="BankingRulesModel.Country" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Country1">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_City">
+    <End Role="Country" Type="BankingRulesModel.Country" Multiplicity="0..1" />
+    <End Role="Customer" Type="BankingRulesModel.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State_Country">
+    <End Role="Country" Type="BankingRulesModel.Country" Multiplicity="0..1" />
+    <End Role="State" Type="BankingRulesModel.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_State">
+    <End Role="State" Type="BankingRulesModel.State" Multiplicity="0..1" />
+    <End Role="Customer" Type="BankingRulesModel.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateIDP" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="StateIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

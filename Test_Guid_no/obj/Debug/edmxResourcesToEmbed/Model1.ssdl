@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BankingRulesModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="BankingRulesModelStoreContainer">
+    <EntitySet Name="Bank" EntityType="BankingRulesModel.Store.Bank" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="BankingRulesModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Circular" EntityType="BankingRulesModel.Store.Circular" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="City" EntityType="BankingRulesModel.Store.City" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Country" EntityType="BankingRulesModel.Store.Country" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customer" EntityType="BankingRulesModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LoginDetail" EntityType="BankingRulesModel.Store.LoginDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoleMaster" EntityType="BankingRulesModel.Store.RoleMaster" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="State" EntityType="BankingRulesModel.Store.State" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="BankingRulesModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Circular_Category" Association="BankingRulesModel.Store.FK_Circular_Category">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Circular" EntitySet="Circular" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Circular_State" Association="BankingRulesModel.Store.FK_Circular_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Circular" EntitySet="Circular" />
+    </AssociationSet>
+    <AssociationSet Name="FK_City_Country" Association="BankingRulesModel.Store.FK_City_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Country_Country" Association="BankingRulesModel.Store.FK_Country_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Country1" EntitySet="Country" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_City" Association="BankingRulesModel.Store.FK_Customer_City">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_State" Association="BankingRulesModel.Store.FK_Customer_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_State_Country" Association="BankingRulesModel.Store.FK_State_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="State" EntitySet="State" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="BankID" />
+    </Key>
+    <Property Name="BankID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BankName" Type="nvarchar(max)" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="nvarchar" MaxLength="150" />
+    <Property Name="ParentID" Type="bigint" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Circular">
+    <Key>
+      <PropertyRef Name="CircularId" />
+    </Key>
+    <Property Name="CircularId" Type="bigint" Nullable="false" />
+    <Property Name="Category" Type="bigint" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="FileName" Type="nvarchar(max)" />
+    <Property Name="VideoLink" Type="nvarchar" MaxLength="50" />
+    <Property Name="BankID" Type="bigint" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CountryIDF" Type="bigint" />
+    <Property Name="StateIDF" Type="bigint" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityIDP" />
+    </Key>
+    <Property Name="CityIDP" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="StateIDF" Type="bigint" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CountryIDF" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="bigint" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" Nullable="false" MaxLength="80" />
+    <Property Name="ShortName" Type="char" MaxLength="3" />
+    <Property Name="Phonecode" Type="bigint" Nullable="false" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="City" Type="bigint" />
+    <Property Name="Occupation" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nchar" MaxLength="150" />
+    <Property Name="ContactNo" Type="nchar" MaxLength="20" />
+    <Property Name="MobileNo" Type="nchar" MaxLength="15" />
+    <Property Name="CompanyName" Type="nchar" MaxLength="150" />
+    <Property Name="FaxNo" Type="nchar" MaxLength="20" />
+    <Property Name="StartDate" Type="datetime" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CountryIDF" Type="bigint" />
+    <Property Name="StateIDF" Type="bigint" />
+  </EntityType>
+  <EntityType Name="LoginDetail">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="nvarchar" MaxLength="150" />
+    <Property Name="MobileNo" Type="nvarchar" MaxLength="15" />
+    <Property Name="Password" Type="nvarchar" MaxLength="10" />
+    <Property Name="Role" Type="bigint" />
+  </EntityType>
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateIDP" />
+    </Key>
+    <Property Name="StateIDP" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CountryIDF" Type="bigint" />
+    <Property Name="Is_Active" Type="bit" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Circular_Category">
+    <End Role="Country" Type="BankingRulesModel.Store.Country" Multiplicity="0..1" />
+    <End Role="Circular" Type="BankingRulesModel.Store.Circular" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Circular">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Circular_State">
+    <End Role="State" Type="BankingRulesModel.Store.State" Multiplicity="0..1" />
+    <End Role="Circular" Type="BankingRulesModel.Store.Circular" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateIDP" />
+      </Principal>
+      <Dependent Role="Circular">
+        <PropertyRef Name="StateIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_City_Country">
+    <End Role="Country" Type="BankingRulesModel.Store.Country" Multiplicity="0..1" />
+    <End Role="City" Type="BankingRulesModel.Store.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Country_Country">
+    <End Role="Country" Type="BankingRulesModel.Store.Country" Multiplicity="1" />
+    <End Role="Country1" Type="BankingRulesModel.Store.Country" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Country1">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_City">
+    <End Role="Country" Type="BankingRulesModel.Store.Country" Multiplicity="0..1" />
+    <End Role="Customer" Type="BankingRulesModel.Store.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_State">
+    <End Role="State" Type="BankingRulesModel.Store.State" Multiplicity="0..1" />
+    <End Role="Customer" Type="BankingRulesModel.Store.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateIDP" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="StateIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_State_Country">
+    <End Role="Country" Type="BankingRulesModel.Store.Country" Multiplicity="0..1" />
+    <End Role="State" Type="BankingRulesModel.Store.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="State">
+        <PropertyRef Name="CountryIDF" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'BankingRules.dbo.ProcedureTemplate' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="ProcedureTemplate">
+        <Property Name="TemplateName" Type="varchar" MaxLength="200" />
+        <Property Name="Template" Type="varchar(max)" />
+      </EntityType>-->
+</Schema>

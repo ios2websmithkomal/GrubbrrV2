@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="F:\Purvi bhatt\Test_Guid_nopublish" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="http://www.offlineinvoicedemo.com:9810/" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="True" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="True" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Web.config" publishTime="08/11/2016 16:18:02" />
+    <file relUrl="bin/Test_Guid_no.dll" publishTime="08/11/2016 16:18:02" />
+    <file relUrl="bin/Test_Guid_no.pdb" publishTime="08/11/2016 16:18:02" />
+    <file relUrl="Default.aspx" publishTime="08/11/2016 15:48:25" />
+  </publishProfile>
+</publishData>
