@@ -17,7 +17,7 @@ namespace Test_Guid_no
         protected void Page_Load(object sender, EventArgs e)
         {
             wcf.GrubrrV2Client ct = new GrubrrV2Client();
-
+            //1st 
             
 
            // Response.Write(ct.ManageCategory(CreateSamplePeople(1).ToArray()));
