@@ -19,7 +19,7 @@ namespace Test_Guid_no
             wcf.GrubrrV2Client ct = new GrubrrV2Client();
             //1st 
             
-
+//2nd live change
            // Response.Write(ct.ManageCategory(CreateSamplePeople(1).ToArray()));
 
 
